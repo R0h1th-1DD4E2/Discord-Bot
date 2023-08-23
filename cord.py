@@ -26,6 +26,8 @@ async def play(ctx):
         return
 
     voice_channel = ctx.author.voice.channel
+
+    voice_client = None
     
     if not ctx.voice_client:
         ffmpeg_path = r'C:\ffmpeg\bin\ffmpeg.exe'
@@ -59,6 +61,5 @@ async def resume(ctx):
 async def stop(ctx):
     voice_client = ctx.voice_client
     voice_client.stop()
-
 
 bot.run(token)
