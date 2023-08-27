@@ -35,7 +35,6 @@ async def play(ctx):
     else:
         voice_client = ctx.voice_client
 
-    # Stop any ongoing playback
     voice_client.stop()
 
     FFMPEG_OPTIONS = {
@@ -43,23 +42,29 @@ async def play(ctx):
         'options': '-vn',
     }
 
-    voice_client.play(discord.FFmpegPCMAudio(url, executable=ffmpeg_path, **FFMPEG_OPTIONS))
+    if url:
+        voice_client.play(discord.FFmpegPCMAudio(url, executable=ffmpeg_path, pipe=True, **FFMPEG_OPTIONS))
+    else:
+        await ctx.send("No valid YouTube URL found.")
 
 @bot.command()
 async def pause(ctx):
     voice_client = ctx.voice_client
     if voice_client.is_playing():
         voice_client.pause()
+        await ctx.send("Music Paused")
 
 @bot.command()
 async def resume(ctx):
     voice_client = ctx.voice_client
     if voice_client.is_paused():
         voice_client.resume()
+        await ctx.send("Music resumed")
 
 @bot.command()
 async def stop(ctx):
     voice_client = ctx.voice_client
     voice_client.stop()
+    await ctx.send("Music Stopped")
 
 bot.run(token)

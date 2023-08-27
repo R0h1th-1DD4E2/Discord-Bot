@@ -10,7 +10,7 @@ def search_lofi_music():
     params = {
         "key": token,
         "part": "snippet",
-        "q": "high on life",
+        "q": "lofi girl not live music",
         "type": "video",
     }
 
