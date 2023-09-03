@@ -1,23 +1,20 @@
 import json 
 from datetime import datetime, timedelta
 
-dictionary = {
-    "accessed_time": datetime.now().strftime("%H:%M:%S"),
-    "expire_date": (datetime.now() + timedelta(hours=1)).strftime("%H:%M:%S") 
-}
+def dump_json(response):
+    data = {
+        "access_time": datetime.now().strftime("%H:%M:%S"),
+        "expire_date": (datetime.now() + timedelta(hours=1)).strftime("%H:%M:%S") 
+    }
 
-response = {
-    
-}
+    data.update(response) 
 
-dictionary.update(response)
-    
-with open("response.json", "w") as jsonfile:
-    json.dump(dictionary, jsonfile)
-    jsonfile.close()
+    with open("response.json", "w") as jsonfile:
+        json.dump(data, jsonfile)
+        jsonfile.close()
 
-
-with open("response.json", "r") as jsonfile:
-    data = json.load(jsonfile)
-    print(data["expire_date"] > data["accessed_time"])
-    jsonfile.close()
+def load_json():
+    with open("response.json", "r") as jsonfile:
+        data = json.load(jsonfile)
+        jsonfile.close()
+        return data["access_time"] , data["expire_date"] , data["access_token"] , data["refresh_token"]
